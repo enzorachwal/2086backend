@@ -1,5 +1,5 @@
 
-from todo.models import Duvida,Comorbidade,Paciente,Medico,Consulta,Exame  
+from todo.models import Duvida,Comorbidade,Paciente,Medico,Consulta,Exame,Contato  
 from rest_framework import routers, serializers, viewsets, mixins 
 
 # Serializers define the API representation.
@@ -70,7 +70,16 @@ class ExameViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Exame.objects.all()
     serializer_class = ExameSerializer 
 
+ # Serializers define the API representation.
+class ContatoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contato
+        fields = ['nome', 'email', 'mensagem']
 
+# ViewSets define the view behavior.
+class ContatoViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Contato.objects.all()
+    serializer_class = ContatoSerializer 
 
 class CreatePacienteViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
   serializer_class = PacienteSerializer 
@@ -78,7 +87,11 @@ class CreatePacienteViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 class CreateMedicoViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
   serializer_class = MedicoSerializer 
-  queryset = Medico.objects.all()         
+  queryset = Medico.objects.all() 
+
+class CreateContatoViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+  serializer_class = ContatoSerializer 
+  queryset = Contato.objects.all()           
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -86,3 +99,4 @@ router.register(r'duvidas', DuvidaViewSet)
 router.register(r'consultas', ConsultaViewSet)
 router.register(r'create-paciente', CreatePacienteViewSet)
 router.register(r'create-medico', CreateMedicoViewSet)
+router.register(r'create-contato', CreateContatoViewSet)

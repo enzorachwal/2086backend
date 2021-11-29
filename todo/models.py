@@ -81,4 +81,15 @@ class Hospital(models.Model):
       return self.nome
   class Meta:
       verbose_name = "Hospital"
-      verbose_name_plural = "Hospitais"      
+      verbose_name_plural = "Hospitais" 
+
+class Contato(models.Model):
+  nome = models.CharField("Nome",max_length=100)
+  email = models.CharField("exemplo@mail.com", max_length=100)
+  mensagem = models.TextField("Mensagem")
+   
+  def __str__(self):
+      return str(self.nome)
+  class Meta:
+      verbose_name = "Contato"
+      verbose_name_plural = "Contatos"              
